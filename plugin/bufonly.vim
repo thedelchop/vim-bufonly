@@ -16,6 +16,8 @@ if exists('g:BufonlyLoaded') || &cp
 end
 let g:BufonlyLoaded = 1
 
+let s:delete_cmd = get(g:, 'bufonly_delete_cmd', 'bdel')
+
 command! -nargs=? -complete=buffer -bang Bonly
     \ :call BufOnly('<args>', '<bang>')
 command! -nargs=? -complete=buffer -bang BOnly
@@ -56,7 +58,7 @@ function! BufOnly(buffer, bang)
 							\ n '(add ! to override)'
 				echohl None
 			else
-				silent exe 'bdel' . a:bang . ' ' . n
+				silent exe s:delete_cmd . a:bang . ' ' . n
 				if ! buflisted(n)
 					let delete_count = delete_count+1
 				endif
